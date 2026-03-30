@@ -1,0 +1,770 @@
+/* OfficerDashboard.css - Bar Graph Focused Dashboard */
+
+/* ============================================
+   Animations
+   ============================================ */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes growWidth {
+  from {
+    width: 0;
+  }
+  to {
+    width: var(--target-width);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+/* ============================================
+   Main Container
+   ============================================ */
+.officer-dashboard {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 24px;
+  animation: fadeInUp 0.4s ease-out;
+  height: 90vh;
+  overflow: auto;
+  scrollbar-width: none;
+}
+
+/* Header */
+.officer-dashboard__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.officer-dashboard__title-section {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.officer-dashboard__icon {
+  font-size: 48px;
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(59, 130, 246, 0.2);
+}
+
+.officer-dashboard__title {
+  font-size: 32px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #0f172a, #3b82f6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0 0 4px 0;
+}
+
+.officer-dashboard__subtitle {
+  color: #64748b;
+  margin: 0;
+  font-size: 14px;
+}
+
+.officer-dashboard__date {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: #f1f5f9;
+  border-radius: 12px;
+  font-size: 14px;
+  color: #475569;
+}
+
+/* Section Title */
+.officer-dashboard__section-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 20px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.officer-dashboard__section-title::before {
+  content: '';
+  width: 4px;
+  height: 24px;
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  border-radius: 2px;
+}
+
+/* ============================================
+   Main Progress Bars
+   ============================================ */
+.officer-dashboard__main-bars {
+  margin-bottom: 40px;
+}
+
+.officer-dashboard__bars-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.progress-bar-card {
+  background: white;
+  border-radius: 20px;
+  padding: 20px;
+  border: 1px solid #e2e8f0;
+  transition: all 0.3s;
+}
+
+.progress-bar-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.15);
+}
+
+.progress-bar-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.progress-bar-card__title-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.progress-bar-card__icon {
+  font-size: 24px;
+}
+
+.progress-bar-card__title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.progress-bar-card__stats {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.progress-bar-card__value {
+  font-size: 24px;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.progress-bar-card__total {
+  font-size: 14px;
+  color: #64748b;
+  font-weight: 400;
+}
+
+.progress-bar-card__bar-container {
+  height: 12px;
+  background: #e2e8f0;
+  border-radius: 6px;
+  overflow: hidden;
+  margin: 12px 0;
+}
+
+.progress-bar-card__bar {
+  height: 100%;
+  border-radius: 6px;
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.progress-bar-card__bar-shine {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  animation: shimmer 2s infinite;
+}
+
+.progress-bar-card__percentage {
+  font-size: 13px;
+  font-weight: 600;
+  text-align: right;
+  margin-top: 8px;
+}
+
+/* ============================================
+   Stats Grid
+   ============================================ */
+.officer-dashboard__stats-section {
+  margin-bottom: 40px;
+}
+
+.officer-dashboard__stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 24px;
+}
+
+/* Horizontal Bar Graph */
+.horizontal-graph {
+  background: white;
+  border-radius: 20px;
+  padding: 24px;
+  border: 1px solid #e2e8f0;
+  transition: all 0.3s;
+}
+
+.horizontal-graph:hover {
+  box-shadow: 0 8px 20px -6px rgba(0, 0, 0, 0.1);
+}
+
+.horizontal-graph__title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 20px 0;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.horizontal-graph__bars {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.horizontal-graph__item {
+  width: 100%;
+}
+
+.horizontal-graph__item-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.horizontal-graph__item-label {
+  font-weight: 600;
+  color: #475569;
+}
+
+.horizontal-graph__item-value {
+  font-weight: 600;
+  color: #3b82f6;
+}
+
+.horizontal-graph__bar-container {
+  height: 8px;
+  background: #e2e8f0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.horizontal-graph__bar {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.horizontal-graph__bar-shine {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  animation: shimmer 2s infinite;
+}
+
+.horizontal-graph__total {
+  text-align: right;
+  font-size: 13px;
+  font-weight: 600;
+  color: #64748b;
+  padding-top: 12px;
+  border-top: 1px solid #e2e8f0;
+  margin-top: 8px;
+}
+
+/* Stacked Bar Graph */
+.stacked-graph {
+  background: white;
+  border-radius: 20px;
+  padding: 24px;
+  border: 1px solid #e2e8f0;
+  transition: all 0.3s;
+}
+
+.stacked-graph:hover {
+  box-shadow: 0 8px 20px -6px rgba(0, 0, 0, 0.1);
+}
+
+.stacked-graph__title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 20px 0;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.stacked-graph__bar-container {
+  display: flex;
+  height: 40px;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.stacked-graph__segment {
+  height: 100%;
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.stacked-graph__segment-shine {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  animation: shimmer 2s infinite;
+}
+
+.stacked-graph__legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.stacked-graph__legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+}
+
+.stacked-graph__legend-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+}
+
+.stacked-graph__legend-label {
+  font-weight: 500;
+  color: #475569;
+}
+
+.stacked-graph__legend-value {
+  font-weight: 600;
+  color: #3b82f6;
+}
+
+.stacked-graph__total {
+  text-align: right;
+  font-size: 13px;
+  font-weight: 600;
+  color: #64748b;
+  padding-top: 12px;
+  border-top: 1px solid #e2e8f0;
+}
+
+/* ============================================
+   Sections
+   ============================================ */
+.officer-dashboard__sections {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 24px;
+  margin-top: 40px;
+}
+
+.dashboard-section {
+  background: white;
+  border-radius: 20px;
+  border: 1px solid #e2e8f0;
+  overflow: hidden;
+  transition: all 0.3s;
+}
+
+.dashboard-section:hover {
+  box-shadow: 0 8px 20px -6px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-section__header {
+  padding: 20px;
+  background: #f8fafc;
+  border-bottom: 1px solid #e2e8f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dashboard-section__title-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.dashboard-section__icon {
+  font-size: 24px;
+}
+
+.dashboard-section__title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+}
+
+.dashboard-section__badge {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  color: white;
+  animation: pulse 1s infinite;
+}
+
+.dashboard-section__content {
+  padding: 20px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+/* Custom Scrollbar */
+.dashboard-section__content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.dashboard-section__content::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 3px;
+}
+
+.dashboard-section__content::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+
+.dashboard-section__content::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* List Items */
+.officer-dashboard__list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background: #f8fafc;
+  border-radius: 12px;
+  transition: all 0.2s;
+}
+
+.list-item:hover {
+  background: #f1f5f9;
+  transform: translateX(4px);
+}
+
+.list-item__info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.list-item__icon {
+  font-size: 24px;
+}
+
+.list-item__name {
+  font-weight: 600;
+  color: #0f172a;
+  margin-bottom: 4px;
+}
+
+.list-item__status {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.list-item__action {
+  padding: 6px 12px;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #3b82f6;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.list-item__action:hover {
+  background: #3b82f6;
+  color: white;
+  border-color: #3b82f6;
+  transform: translateX(-2px);
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.empty-state__icon {
+  font-size: 48px;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.empty-state__message {
+  font-size: 14px;
+  color: #64748b;
+  margin: 0;
+}
+
+/* ============================================
+   Responsive Design
+   ============================================ */
+@media (max-width: 1024px) {
+  .officer-dashboard {
+    padding: 24px 20px;
+  }
+
+  .officer-dashboard__title {
+    font-size: 28px;
+  }
+
+  .officer-dashboard__stats-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .officer-dashboard {
+    padding: 20px 16px;
+  }
+
+  .officer-dashboard__header {
+    flex-direction: column;
+  }
+
+  .officer-dashboard__title-section {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .officer-dashboard__title {
+    font-size: 24px;
+  }
+
+  .officer-dashboard__bars-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .officer-dashboard__sections {
+    grid-template-columns: 1fr;
+  }
+
+  .stacked-graph__legend {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .horizontal-graph__item-header {
+    flex-direction: column;
+    gap: 4px;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-section__header {
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+  }
+
+  .list-item {
+    flex-direction: column;
+    text-align: center;
+    gap: 12px;
+  }
+
+  .list-item__info {
+    flex-direction: column;
+  }
+
+  .progress-bar-card__header {
+    flex-direction: column;
+    text-align: center;
+    gap: 8px;
+  }
+
+  .progress-bar-card__title-wrapper {
+    justify-content: center;
+  }
+}
+
+/* ============================================
+   Dark Mode Support
+   ============================================ */
+@media (prefers-color-scheme: dark) {
+  .officer-dashboard__title {
+    background: linear-gradient(135deg, #e2e8f0, #94a3b8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .progress-bar-card,
+  .horizontal-graph,
+  .stacked-graph,
+  .dashboard-section {
+    background: #1e293b;
+    border-color: #334155;
+  }
+
+  .progress-bar-card__title,
+  .horizontal-graph__title,
+  .stacked-graph__title,
+  .dashboard-section__title {
+    color: #e2e8f0;
+  }
+
+  .progress-bar-card__value {
+    color: #e2e8f0;
+  }
+
+  .progress-bar-card__total,
+  .horizontal-graph__total,
+  .stacked-graph__total {
+    color: #94a3b8;
+  }
+
+  .horizontal-graph__item-label,
+  .stacked-graph__legend-label {
+    color: #94a3b8;
+  }
+
+  .dashboard-section__header {
+    background: #0f172a;
+    border-bottom-color: #334155;
+  }
+
+  .list-item {
+    background: #0f172a;
+  }
+
+  .list-item:hover {
+    background: #1e293b;
+  }
+
+  .list-item__name {
+    color: #e2e8f0;
+  }
+
+  .list-item__action {
+    background: #1e293b;
+    border-color: #334155;
+    color: #60a5fa;
+  }
+
+  .officer-dashboard__date {
+    background: #1e293b;
+    color: #94a3b8;
+  }
+
+  .progress-bar-card__bar-container,
+  .horizontal-graph__bar-container {
+    background: #334155;
+  }
+
+  .horizontal-graph__title,
+  .stacked-graph__title {
+    border-bottom-color: #334155;
+  }
+}
+
+/* ============================================
+   Accessibility
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+  .progress-bar-card__bar,
+  .horizontal-graph__bar,
+  .stacked-graph__segment {
+    transition: none;
+  }
+
+  .progress-bar-card__bar-shine,
+  .horizontal-graph__bar-shine,
+  .stacked-graph__segment-shine {
+    animation: none;
+  }
+}
+
+/* Focus Styles */
+.list-item__action:focus-visible,
+.progress-bar-card:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}

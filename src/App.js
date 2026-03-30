@@ -1,25 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter } from "react-router-dom";
+import { AppProvider } from "./context/AppContext";
+import { AuthProvider, useAuth } from "./context/AuthContext";
+import AppRoutes from "./routes";
+import Layout from "./components/layouts/Layout";
 
-function App() {
+
+function AppContent() {
+  const { role } = useAuth();
+
+
+  if (!role) {
+    return <AppRoutes />;
+  }
+
+ 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Layout>
+      <AppRoutes />
+    </Layout>
   );
 }
 
-export default App;
+export default function App() {
+  return (
+    <BrowserRouter>
+      <AuthProvider>
+        <AppProvider>
+          <AppContent />
+        </AppProvider>
+      </AuthProvider>
+    </BrowserRouter>
+  );
+}
